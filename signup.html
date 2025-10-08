@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoodHub Sign Up</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #1b183a, #381b43, #842c50);
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  color: #fff;
+}
+.signup-card {
+  background: rgba(15,15,35,0.9);
+  padding: 50px 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.signup-card h2 { font-size: 26px; margin-bottom: 15px; }
+.signup-card input {
+  width: 100%; padding: 12px; margin: 10px 0;
+  border-radius: 10px; border: none;
+  background: rgba(255,255,255,0.1); color: #fff;
+  font-size: 14px;
+}
+.signup-card input::placeholder { color: #aaa; }
+.signup-card .btn {
+  width: 100%; padding: 12px; border: none; border-radius: 10px;
+  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
+  background: #ff4f5a; transition: background 0.3s ease;
+}
+.signup-card .btn:hover { background: #ff6f7a; }
+</style>
+</head>
+<body>
+
+<div class="signup-card">
+  <h2>Create Account</h2>
+  <input type="text" placeholder="Username" id="new-username">
+  <input type="password" placeholder="Password" id="new-password">
+  <input type="password" placeholder="Confirm Password" id="confirm-password">
+  <button class="btn" onclick="signup()">Sign Up 🎉</button>
+</div>
+
+<script>
+function signup() {
+  const user = document.getElementById("new-username").value.trim();
+  const pass = document.getElementById("new-password").value.trim();
+  const confirm = document.getElementById("confirm-password").value.trim();
+  if(!user || !pass || !confirm){
+    alert("Please fill all fields.");
+    return;
+  }
+  if(pass !== confirm){
+    alert("Passwords do not match!");
+    return;
+  }
+  localStorage.setItem("registeredUser", user);
+  localStorage.setItem("registeredPass", pass);
+  localStorage.setItem("isLoggedIn", "true");
+  alert("Account created successfully! Redirecting...");
+  window.location.href = "index.html";
+}
+</script>
+</body>
+</html>

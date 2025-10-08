@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoodHub 🎧🎬</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #1b183a, #381b43, #842c50);
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Floating emojis */
+.emoji { position: absolute; bottom: -50px; font-size: 30px; animation: floatUp 6s linear infinite; opacity: 0; z-index: 1; }
+@keyframes floatUp { 0%{transform:translateY(0) scale(1);opacity:0;} 10%{opacity:1;} 100%{transform:translateY(-110vh) scale(1.3);opacity:0;} }
+
+header.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(15, 15, 35, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo { font-size: 2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 15px; text-shadow: 0 0 10px #ff4f5a; }
+.logo img { width: 150px; height: 100px; border-radius: 10px; filter: drop-shadow(0 0 10px #ff4f5a); }
+
+main.container { max-width: 1000px; margin: 60px auto; text-align: center; padding: 0 20px; position: relative; z-index: 2; }
+main h1 { font-size: 2.5rem; margin-bottom: 20px; text-shadow: 0 0 10px #ff4f5a; }
+.intro { font-size: 1.2rem; color: #ccc; max-width: 800px; margin: 0 auto 40px; line-height: 1.6; }
+
+.overview { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 40px; }
+.overview-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 25px; width: 280px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.overview-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(255,79,90,0.3); }
+.overview-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.overview-card p { color: #aaa; margin-bottom: 15px; }
+.overview-card a { display: inline-block; background: #ff4f5a; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; transition: background 0.3s ease, transform 0.3s ease; }
+.overview-card a:hover { background: #ff6f7a; transform: scale(1.05); }
+
+footer.site-footer { text-align: center; padding: 20px; background: rgba(15, 15, 35, 0.8); font-size: 0.9rem; margin-top: 60px; }
+
+.auth-btn { padding: 10px 20px; border: none; border-radius: 10px; background: #ff4f5a; color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top:10px; }
+.auth-btn:hover { background: #ff6f7a; }
+</style>
+</head>
+<body>
+
+<div id="emoji-container"></div>
+
+<header class="site-header">
+  <div class="logo">
+    <img src="moodhub-logo.jpeg" alt="MoodHub Logo">
+    MoodHub
+  </div>
+</header>
+
+<main class="container">
+  <h1 id="welcome-text">🎧🎬 Welcome to MoodHub</h1>
+  <p class="intro">
+    Your one-stop hub for discovering songs and movies based on your mood! 🎶✨🍿
+  </p>
+
+  <div class="overview">
+    <div class="overview-card">
+      <h3>🎵 Songs</h3>
+      <p>Discover tracks that match your current mood — from happy anthems to romantic melodies.</p>
+      <a href="songs.html">Explore Songs</a>
+    </div>
+    <div class="overview-card">
+      <h3>🎬 Movies</h3>
+      <p>Find movies that fit your vibe — heartwarming, thrilling, or fun-filled blockbusters.</p>
+      <a href="movies.html">Explore Movies</a>
+    </div>
+    <div class="overview-card">
+      <h3>💡 How it works</h3>
+      <p>Choose a mood and we’ll show the best songs and movies that resonate with your feelings!</p>
+    </div>
+  </div>
+
+  <button id="auth-btn" class="auth-btn" onclick="handleAuth()">Login</button>
+</main>
+
+<footer class="site-footer">
+  <p>📧 Contact: yourname@email.com | © 2025 MoodHub | Designed by <strong>Keerthan</strong></p>
+</footer>
+
+<script>
+const emojis = ["😀","😎","🖤","🤠","🥰","😊","🥲","😔","😟","😄"];
+const container = document.getElementById("emoji-container");
+function createEmoji() {
+  const emoji = document.createElement("div");
+  emoji.classList.add("emoji");
+  emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  emoji.style.left = Math.random()*100 + "vw";
+  emoji.style.animationDuration = (4 + Math.random()*4) + "s";
+  emoji.style.fontSize = (20 + Math.random()*30) + "px";
+  container.appendChild(emoji);
+  setTimeout(()=>emoji.remove(),7000);
+}
+setInterval(createEmoji,700);
+
+const authBtn = document.getElementById("auth-btn");
+const welcomeText = document.getElementById("welcome-text");
+
+function updateAuth(){
+  const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const username = localStorage.getItem("username") || localStorage.getItem("registeredUser");
+  if(loggedIn){
+    authBtn.textContent = "Logout";
+    welcomeText.textContent = `Welcome!💫`;
+  } else {
+    authBtn.textContent = "Login";
+    welcomeText.textContent = "🎧🎬 Welcome to MoodHub";
+  }
+}
+function handleAuth(){
+  if(localStorage.getItem("isLoggedIn")==="true"){
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+    alert("Logged out successfully!");
+    window.location.reload();
+  } else {
+    window.location.href="login.html";
+  }
+}
+updateAuth();
+</script>
+</body>
+</html>
